@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -52,6 +53,9 @@ class SocialCubit extends Cubit<SocialStates> {
     }
     if (index == 1) {
       getUsers();
+    }
+    if (index == 2) {
+      getSingleUserPosts();
     }
 
     currentIndex = index;
@@ -243,6 +247,25 @@ class SocialCubit extends Cubit<SocialStates> {
       }
     }).catchError((error) {
       emit(SocialGetPostErrorState(error.toString()));
+    });
+  }
+
+  List<PostModel> userPosts = [];
+  void getSingleUserPosts() {
+    userPosts = [];
+    emit(SocialGetSingleUserPostLoadingState());
+    FirebaseFirestore.instance.collection("posts").get().then((value) {
+      for (var element in value.docs) {
+        element.reference.collection("likes").get().then((value) {
+          if (PostModel.fromJson(element.data()).uId ==
+              FirebaseAuth.instance.currentUser!.uid) {
+            userPosts.add(PostModel.fromJson(element.data()));
+            emit(SocialGetSingleUserPostSuccessState());
+          }
+        }).catchError((error) {});
+      }
+    }).catchError((error) {
+      emit(SocialGetSingleUserPostErrorState());
     });
   }
 

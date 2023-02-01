@@ -9,7 +9,6 @@ import 'package:udemy_course/modules/Social_app/login/social_login_screen.dart';
 import 'package:udemy_course/shared/bloc_observer.dart';
 import 'package:udemy_course/shared/components/constants.dart';
 import 'package:udemy_course/shared/networks/local/cache_helper.dart';
-
 import 'package:udemy_course/shared/styles/themes.dart';
 import 'layout/social_app/cubit/social_states.dart';
 

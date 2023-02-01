@@ -133,3 +133,10 @@ class SocialGetPostCommentsErrorState  extends SocialStates{}
 //go to chats 
 
 class SocialGoToChats extends SocialStates{}
+
+//get Single User Posts
+class SocialGetSingleUserPostLoadingState extends SocialStates{}
+
+class SocialGetSingleUserPostSuccessState extends SocialStates{}
+
+class SocialGetSingleUserPostErrorState  extends SocialStates{}
