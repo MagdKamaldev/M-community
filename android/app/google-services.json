@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "652256580390",
+    "project_id": "udemy-magd",
+    "storage_bucket": "udemy-magd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:652256580390:android:804f779900085c33dfa7e7",
+        "android_client_info": {
+          "package_name": "com.example.shop_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "652256580390-kmdatlle266sopi7o1uier7s87hrsk7b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shop_app",
+            "certificate_hash": "ad366ab4de709331873c66e97bb87abdc620b407"
+          }
+        },
+        {
+          "client_id": "652256580390-getia7mk0s0826hh8g5f8vff9k4baian.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBmsBCqNvw7tGALraE5eM6I88kkHQ9NF4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "652256580390-getia7mk0s0826hh8g5f8vff9k4baian.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
