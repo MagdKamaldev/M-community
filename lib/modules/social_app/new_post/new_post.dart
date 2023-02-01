@@ -50,7 +50,7 @@ class NewPostScreen extends StatelessWidget {
                     CircleAvatar(
                       radius: 25,
                       backgroundImage: NetworkImage(
-                          "https://media.licdn.com/dms/image/D4D03AQEAlEdxbx4KGw/profile-displayphoto-shrink_800_800/0/1667657690212?e=1678320000&v=beta&t=u0MASedYhePhKhC0yxh640kSVAK0GyAVU4on_n_0Ne8"),
+                          SocialCubit.get(context).userModel!.image!),
                     ),
                     SizedBox(
                       width: 15.0,
@@ -122,12 +122,6 @@ class NewPostScreen extends StatelessWidget {
                             Text("Add Photo"),
                           ],
                         ),
-                      ),
-                    ),
-                    Expanded(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: Text("# Tags"),
                       ),
                     ),
                   ],

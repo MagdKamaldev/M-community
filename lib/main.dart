@@ -17,8 +17,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   var token = await FirebaseMessaging.instance.getToken();
-  //print(token);
-
   Bloc.observer = MyBlocObserver();
   await CacheHelper.init();
   Widget? widget;
@@ -56,9 +54,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-            create: (context) => SocialCubit()
-              ..getUserData()
-              ..getPosts(),),
+          create: (context) => SocialCubit()
+            ..getUserData()
+            ..getPosts(),
+        ),
       ],
       child: BlocConsumer<SocialCubit, SocialStates>(
         listener: (context, state) => {},

@@ -9,6 +9,7 @@ import 'package:udemy_course/shared/components/components.dart';
 import 'package:udemy_course/shared/styles/icon_broken.dart';
 
 import '../../modules/Social_app/new_post/new_post.dart';
+import '../../shared/components/constants.dart';
 
 class SocialLayout extends StatelessWidget {
   @override
@@ -23,15 +24,19 @@ class SocialLayout extends StatelessWidget {
         var cubit = SocialCubit.get(context);
         return Scaffold(
           appBar: AppBar(
-            title: Text(cubit.titles[cubit.currentIndex]),
+            title: Center(child: Text(cubit.titles[cubit.currentIndex])),
             actions: [
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    IconBroken.Video,
-                    color: Colors.red,
-                  )),
-              IconButton(onPressed: () {}, icon: Icon(IconBroken.Search)),
+                icon: Icon(
+                  IconBroken.Plus,
+                ),
+                onPressed: () {
+                  navigateTo(context, NewPostScreen());
+                },
+              ),
+              SizedBox(
+                width: 20,
+              ),
             ],
           ),
           body: ConditionalBuilder(
@@ -51,15 +56,32 @@ class SocialLayout extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(IconBroken.Chat), label: "chats"),
               BottomNavigationBarItem(
-                  icon: Icon(IconBroken.Paper_Upload), label: "Post"),
-              BottomNavigationBarItem(
-                  icon: Icon(IconBroken.Location), label: "Map"),
-              BottomNavigationBarItem(
-                  icon: Icon(IconBroken.Setting), label: "Settings"),
+                  icon: Icon(IconBroken.Profile), label: "Profile"),
             ],
             onTap: (index) {
               cubit.changeBottomNavBar(index);
             },
+          ),
+          drawer: Drawer(
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 40,
+                  ),
+                  defaultButton(
+                      function: () =>
+                          SocialCubit.get(context).changeSocialAppMode(),
+                      text: " change theme"),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  defaultButton(
+                      function: () => signoutSocial(context), text: "sign out"),
+                ],
+              ),
+            ),
           ),
         );
       },

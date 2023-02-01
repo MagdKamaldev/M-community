@@ -109,19 +109,6 @@ class SocialGetMessegeSuccessState extends SocialStates {}
 
 class SocialGetMessegeErrorState extends SocialStates {}
 
-
-//get user Location 
-
-class SocialGetUserLocationSuccessState extends SocialStates {}
-
-class SocialGetUserLocationErrorState extends SocialStates {}
-
-//send the user Location
-
-class SocialsendUserLocationSuccessState extends SocialStates {}
-
-class SocialsendUserLocationErrorState extends SocialStates {}
-
 //get Single Post 
 
 class SocialGetsinglePostLoadingState extends SocialStates {}
@@ -142,3 +129,7 @@ class SocialGetPostCommentsLoadingState  extends SocialStates{}
 class SocialGetPostCommentsSuccessState extends SocialStates{}
 
 class SocialGetPostCommentsErrorState  extends SocialStates{}
+
+//go to chats 
+
+class SocialGoToChats extends SocialStates{}

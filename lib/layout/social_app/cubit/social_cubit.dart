@@ -4,20 +4,17 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:udemy_course/layout/social_app/cubit/social_states.dart';
 import 'package:udemy_course/models/social_app/post_model.dart';
 import 'package:udemy_course/models/social_app/social_user_model.dart';
+import 'package:udemy_course/modules/social_app/profile/profile_screen.dart';
 import 'package:udemy_course/shared/components/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import '../../../models/social_app/comment_model.dart';
 import '../../../models/social_app/messege_model.dart';
 import '../../../modules/Social_app/chats/chats_screen.dart';
 import '../../../modules/Social_app/feeds/feeds_screen.dart';
-import '../../../modules/Social_app/new_post/new_post.dart';
-import '../../../modules/Social_app/settings/settings_screen.dart';
-import '../../../modules/Social_app/users/users_screen.dart';
 import '../../../shared/networks/local/cache_helper.dart';
 
 class SocialCubit extends Cubit<SocialStates> {
@@ -41,35 +38,30 @@ class SocialCubit extends Cubit<SocialStates> {
   List<Widget> screens = [
     FeedsScreen(),
     ChatsScreen(),
-    NewPostScreen(),
-    MapsScreen(),
-    SocialSettingsScreen(),
+    PorfileScreen(),
   ];
   List<String> titles = [
     "Home",
     "Chats",
-    "post",
-    "Users",
-    "Settings",
+    "profile",
   ];
 
   void changeBottomNavBar(int index) {
     if (index == 0) {
       getPosts();
     }
-
     if (index == 1) {
       getUsers();
     }
-    if (index == 3) {
-      getMyCurrentLocation();
-    }
-    if (index == 2) {
-      emit(SocialNewPostState());
-    } else {
-      currentIndex = index;
-      emit(SocialChangeBottomNavState());
-    }
+
+    currentIndex = index;
+    emit(SocialChangeBottomNavState());
+  }
+
+  void gotoChats() {
+    currentIndex = 1;
+    getUsers();
+    emit(SocialGoToChats());
   }
 
   File? profileImage;
@@ -486,13 +478,6 @@ class SocialCubit extends Cubit<SocialStates> {
     });
   }
 
-  Future<void> getMyCurrentLocation() async {
-    position = await SocialCubit.requestPermissionAndGetCurrentLocation()
-        .whenComplete(() {
-      emit(SocialGetUserLocationSuccessState());
-    });
-  }
-
   bool isDark = false;
 
   void changeSocialAppMode({bool? fromShared}) {
@@ -504,22 +489,5 @@ class SocialCubit extends Cubit<SocialStates> {
         emit(SocialChangeAppModeState());
       });
     }
-  }
-
-  static Future<Position> requestPermissionAndGetCurrentLocation() async {
-    LocationPermission permission;
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-    return Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
   }
 }

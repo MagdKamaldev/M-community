@@ -113,75 +113,6 @@ class FeedsScreen extends StatelessWidget {
                               .copyWith(height: 1.4),
                         ),
                         Spacer(),
-                        if (model.uId == FirebaseAuth.instance.currentUser!.uid)
-                          PopupMenuButton(
-                            itemBuilder: (BuildContext context) =>
-                                <PopupMenuEntry>[
-                              PopupMenuItem(
-                                height: 7,
-                                onTap: () {},
-                                child: TextButton(
-                                  child: Text('Delete Post'),
-                                  onPressed: () {
-                                    var alert = AlertDialog(
-                                      title: Center(
-                                        child: Text(
-                                          'Alert ! ',
-                                          style: TextStyle(color: Colors.red),
-                                        ),
-                                      ),
-                                      titlePadding: EdgeInsets.all(10),
-                                      content: SizedBox(
-                                        width: 150,
-                                        height: 150,
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                                'Are you sure you want to delete this post ?'),
-                                            Spacer(),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text('NO'),
-                                                ),
-                                                ElevatedButton(
-                                                  onPressed: () {
-                                                    SocialCubit.get(context)
-                                                        .deletepost(
-                                                            SocialCubit.get(
-                                                                    context)
-                                                                .postId[index]);
-                                                    Navigator.pop(context);
-                                                  },
-                                                  child: Text('YES'),
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                    Navigator.pop(context);
-                                    showDialog(
-                                        barrierColor:
-                                            Colors.grey.withOpacity(.6),
-                                        barrierLabel: 'dsadsasadsadasdasdddsad',
-                                        context: context,
-                                        builder: (context) => alert);
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
                       ],
                     ),
                     Text(
@@ -190,12 +121,76 @@ class FeedsScreen extends StatelessWidget {
                           .textTheme
                           .titleMedium!
                           .copyWith(height: 1.4, color: Colors.grey),
-                    )
+                    ),
                   ],
                 )),
                 SizedBox(
                   width: 15.0,
                 ),
+                if (model.uId == FirebaseAuth.instance.currentUser!.uid)
+                  PopupMenuButton(
+                    itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                      PopupMenuItem(
+                        height: 7,
+                        onTap: () {},
+                        child: TextButton(
+                          child: Text('Delete Post'),
+                          onPressed: () {
+                            var alert = AlertDialog(
+                              title: Center(
+                                child: Text(
+                                  'Alert ! ',
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              titlePadding: EdgeInsets.all(10),
+                              content: SizedBox(
+                                width: 150,
+                                height: 150,
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                        'Are you sure you want to delete this post ?'),
+                                    Spacer(),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('NO'),
+                                        ),
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            SocialCubit.get(context).deletepost(
+                                                SocialCubit.get(context)
+                                                    .postId[index]);
+                                            Navigator.pop(context);
+                                          },
+                                          child: Text('YES'),
+                                        )
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                            Navigator.pop(context);
+                            showDialog(
+                                barrierColor: Colors.grey.withOpacity(.6),
+                                barrierLabel: 'dsadsasadsadasdasdddsad',
+                                context: context,
+                                builder: (context) => alert);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
               ],
             ),
             Padding(
@@ -206,10 +201,28 @@ class FeedsScreen extends StatelessWidget {
                 color: Colors.grey[300],
               ),
             ),
-            Text(
-              model.text!,
-              style: Theme.of(context).textTheme.titleMedium,
+            SizedBox(
+              width: double.infinity,
+              child: Text(
+                '${model.text}',
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      height: 1.4,
+                    ),
+              ),
             ),
+            if (model.postImage != '')
+              Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Container(
+                    width: double.infinity,
+                    height: 300,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage('${model.postImage}')),
+                    )),
+              ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 5),
               child: Row(

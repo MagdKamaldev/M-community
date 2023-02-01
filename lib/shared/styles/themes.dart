@@ -21,6 +21,9 @@ ThemeData lightTheme = ThemeData(
           fontWeight: FontWeight.bold,
           fontFamily: "Cairo"),
     ),
+    drawerTheme: DrawerThemeData(
+      backgroundColor: Colors.white,
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: defaultColor,
@@ -59,6 +62,9 @@ ThemeData darkTheme = ThemeData(
           fontSize: 20.0,
           fontWeight: FontWeight.bold),
     ),
+    drawerTheme: DrawerThemeData(
+      backgroundColor: HexColor("333739"),
+    ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
       selectedItemColor: defaultColor,
@@ -81,5 +87,4 @@ ThemeData darkTheme = ThemeData(
       ),
     ),
     fontFamily: "Cairo",
-    primarySwatch: defaultColor
-    );
+    primarySwatch: defaultColor);
