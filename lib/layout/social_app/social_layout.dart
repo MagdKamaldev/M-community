@@ -5,11 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:udemy_course/layout/social_app/cubit/social_cubit.dart';
 import 'package:udemy_course/layout/social_app/cubit/social_states.dart';
+import 'package:udemy_course/modules/social_app/drawer/drawer.dart';
 import 'package:udemy_course/shared/components/components.dart';
 import 'package:udemy_course/shared/styles/icon_broken.dart';
 
 import '../../modules/Social_app/new_post/new_post.dart';
-import '../../shared/components/constants.dart';
 
 class SocialLayout extends StatelessWidget {
   @override
@@ -62,27 +62,10 @@ class SocialLayout extends StatelessWidget {
               cubit.changeBottomNavBar(index);
             },
           ),
-          drawer: Drawer(
-            child: Padding(
-              padding: const EdgeInsets.all(10),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  defaultButton(
-                      function: () =>
-                          SocialCubit.get(context).changeSocialAppMode(),
-                      text: " change theme"),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  defaultButton(
-                      function: () => signoutSocial(context), text: "sign out"),
-                ],
-              ),
-            ),
-          ),
+          drawer: SocialCubit.get(context).userModel != null
+              ? appDrawer(context, SocialCubit.get(context),
+                  SocialCubit.get(context).userModel)
+              : Drawer(),
         );
       },
     );

@@ -32,7 +32,11 @@ class ChatsScreen extends StatelessWidget {
 
   Widget buildChatItem(SocialUserModel model, context) => InkWell(
         onTap: () {
-          navigateTo(context,ChatDetailsScreen(userModel: model,));
+          navigateTo(
+              context,
+              ChatDetailsScreen(
+                userModel: model,
+              ));
         },
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -47,7 +51,9 @@ class ChatsScreen extends StatelessWidget {
               ),
               Text(
                 model.name!,
-                style: TextStyle(height: 1.4),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                      height: 1.4,
+                    ),
               ),
             ],
           ),

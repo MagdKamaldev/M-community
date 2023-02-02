@@ -4,12 +4,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import 'package:udemy_course/layout/social_app/cubit/social_cubit.dart';
 import 'package:udemy_course/layout/social_app/cubit/social_states.dart';
 import 'package:udemy_course/models/social_app/post_model.dart';
 import 'package:udemy_course/modules/social_app/comment_details/comment_details.dart';
 import 'package:udemy_course/shared/components/components.dart';
 import 'package:udemy_course/shared/styles/icon_broken.dart';
+import '../../../shared/networks/local/cache_helper.dart';
 
 class FeedsScreen extends StatelessWidget {
   @override
@@ -19,51 +21,53 @@ class FeedsScreen extends StatelessWidget {
       builder: (context, state) {
         return ConditionalBuilder(
             condition: SocialCubit.get(context).userModel != null,
-            builder: (contrext) => SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      Card(
-                        elevation: 10,
-                        margin: EdgeInsets.all(8.0),
-                        clipBehavior: Clip.antiAliasWithSaveLayer,
-                        child: Stack(
-                          alignment: AlignmentDirectional.bottomEnd,
-                          children: [
-                            Image(
-                              image: NetworkImage(
-                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQkT5pv_9w_YsKcwVQjS_hNXxxSR-DYNFe6Q&usqp=CAU"),
-                              fit: BoxFit.cover,
-                              height: 240,
-                              width: double.infinity,
-                            ),
-                            Text(
-                              "Communicate with the world",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(color: Colors.white),
-                            ),
-                          ],
+            builder: (contrext) => LiquidPullToRefresh(
+                  onRefresh: () => SocialCubit.get(context).getPosts(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Card(
+                          elevation: 10,
+                          margin: EdgeInsets.all(8.0),
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          child: Stack(
+                            alignment: AlignmentDirectional.bottomEnd,
+                            children: [
+                              Image(
+                                image: NetworkImage(
+                                    "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQkT5pv_9w_YsKcwVQjS_hNXxxSR-DYNFe6Q&usqp=CAU"),
+                                fit: BoxFit.cover,
+                                height: 240,
+                                width: double.infinity,
+                              ),
+                              Text(
+                                "Communicate with the world",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      ListView.separated(
-                        separatorBuilder: (context, index) => SizedBox(
+                        ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 10,
+                          ),
+                          itemBuilder: (context, index) => buildPostItem(
+                            SocialCubit.get(context).posts[index],
+                            context,
+                            index,
+                          ),
+                          itemCount: SocialCubit.get(context).posts.length,
+                          shrinkWrap: true,
+                          physics: NeverScrollableScrollPhysics(),
+                        ),
+                        SizedBox(
                           height: 10,
                         ),
-                        itemBuilder: (context, index) => buildPostItem(
-                          SocialCubit.get(context).posts[index],
-                          context,
-                          index,
-                        ),
-                        itemCount: SocialCubit.get(context).posts.length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
             fallback: (context) => Center(
@@ -74,7 +78,6 @@ class FeedsScreen extends StatelessWidget {
   }
 }
 
-
 Widget buildPostItem(
   PostModel model,
   context,
@@ -82,7 +85,8 @@ Widget buildPostItem(
 ) {
   var commentController = TextEditingController();
   return Card(
-    color: SocialCubit.get(context).isDark ? HexColor("333739") : Colors.white,
+    color:
+        CacheHelper.getData(key: "isDark") ? HexColor("333739") : Colors.white,
     elevation: 5,
     margin: EdgeInsets.symmetric(horizontal: 8.0),
     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -130,6 +134,9 @@ Widget buildPostItem(
               ),
               if (model.uId == FirebaseAuth.instance.currentUser!.uid)
                 PopupMenuButton(
+                  color: CacheHelper.getData(key: "isDark")
+                      ? Colors.white
+                      : Colors.black,
                   itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                     PopupMenuItem(
                       height: 7,
@@ -154,7 +161,13 @@ Widget buildPostItem(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Text(
-                                      'Are you sure you want to delete this post ?'),
+                                    'Are you sure you want to delete this post ?',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleMedium!
+                                        .copyWith(
+                                            height: 1.4, color: Colors.black),
+                                  ),
                                   Spacer(),
                                   Row(
                                     mainAxisAlignment:
