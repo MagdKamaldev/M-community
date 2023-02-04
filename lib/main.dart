@@ -9,7 +9,6 @@ import 'package:udemy_course/modules/Social_app/login/social_login_screen.dart';
 import 'package:udemy_course/shared/bloc_observer.dart';
 import 'package:udemy_course/shared/components/constants.dart';
 import 'package:udemy_course/shared/networks/local/cache_helper.dart';
-
 import 'package:udemy_course/shared/styles/themes.dart';
 import 'layout/social_app/cubit/social_states.dart';
 
@@ -60,13 +59,16 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: BlocConsumer<SocialCubit, SocialStates>(
-        listener: (context, state) => {},
+        listener: (context, state) => {
+        },
         builder: (context, state) {
           return MaterialApp(
             title: 'Flutter Demo',
             theme: lightTheme,
             darkTheme: darkTheme,
-            themeMode: CacheHelper.getData(key: "isDark")
+            themeMode: 
+           
+            SocialCubit.get(context).isDark
                 ? ThemeMode.dark
                 : ThemeMode.light,
             home: startWidget,

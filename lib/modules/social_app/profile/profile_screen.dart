@@ -9,9 +9,7 @@ import 'package:udemy_course/layout/social_app/cubit/social_states.dart';
 import 'package:udemy_course/modules/social_app/edit_profile/edit_profile.dart';
 import 'package:udemy_course/shared/components/components.dart';
 import 'package:udemy_course/shared/styles/icon_broken.dart';
-
 import '../../../models/social_app/post_model.dart';
-import '../../../shared/networks/local/cache_helper.dart';
 
 class PorfileScreen extends StatelessWidget {
   @override
@@ -207,8 +205,7 @@ Widget buildProfilePostItem(
 ) {
   var commentController = TextEditingController();
   return Card(
-    color:
-        CacheHelper.getData(key: "isDark") ? HexColor("333739") : Colors.white,
+    color: SocialCubit.get(context).isDark ? HexColor("333739") : Colors.white,
     elevation: 5,
     margin: const EdgeInsets.symmetric(horizontal: 8.0),
     clipBehavior: Clip.antiAliasWithSaveLayer,
@@ -256,7 +253,7 @@ Widget buildProfilePostItem(
               ),
               if (model.uId == FirebaseAuth.instance.currentUser!.uid)
                 PopupMenuButton(
-                  color: CacheHelper.getData(key: "isDark")
+                  color: SocialCubit.get(context).isDark
                       ? Colors.white
                       : Colors.black,
                   itemBuilder: (BuildContext context) => <PopupMenuEntry>[
