@@ -59,16 +59,14 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: BlocConsumer<SocialCubit, SocialStates>(
-        listener: (context, state) => {
-        },
+        listener: (context, state) => {},
         builder: (context, state) {
+          bool isDark = CacheHelper.getData(key: "isDark");
           return MaterialApp(
-            title: 'Flutter Demo',
+            title: 'Flutter Deqmo',
             theme: lightTheme,
             darkTheme: darkTheme,
-            themeMode: 
-           
-            SocialCubit.get(context).isDark
+            themeMode: isDark
                 ? ThemeMode.dark
                 : ThemeMode.light,
             home: startWidget,
