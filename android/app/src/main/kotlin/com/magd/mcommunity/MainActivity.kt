@@ -1,4 +1,4 @@
-package com.example.shop_app
+package com.magd.mcommunity
 
 import io.flutter.embedding.android.FlutterActivity
 
