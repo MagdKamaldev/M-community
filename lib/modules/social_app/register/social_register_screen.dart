@@ -2,8 +2,10 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:udemy_course/modules/social_app/privacy_policy/privacy.dart';
 import 'package:udemy_course/modules/social_app/register/cubit/register_cubit.dart';
 import 'package:udemy_course/modules/social_app/register/cubit/register_states.dart';
+import 'package:udemy_course/shared/styles/colors.dart';
 import '../../../layout/Social_app/social_layout.dart';
 import '../../../shared/components/components.dart';
 
@@ -17,7 +19,7 @@ class SocialRegisterScreen extends StatelessWidget {
     var phoneController = TextEditingController();
     return BlocProvider(
       create: (BuildContext context) => SocialRegisterCubit(),
-      child: BlocConsumer<SocialRegisterCubit,SocialAppRegisterStates>(
+      child: BlocConsumer<SocialRegisterCubit, SocialAppRegisterStates>(
         listener: (context, state) {
           if (state is SocialCreateUserSuccessState) {
             navigateAndFinish(context, SocialLayout());
@@ -39,10 +41,8 @@ class SocialRegisterScreen extends StatelessWidget {
                             "REGISTER",
                             style: Theme.of(context)
                                 .textTheme
-                                .headlineMedium!
-                                .copyWith(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold),
+                                .titleMedium!
+                                .copyWith(fontSize: 24),
                           ),
                           SizedBox(
                             height: 20,
@@ -51,8 +51,8 @@ class SocialRegisterScreen extends StatelessWidget {
                             "Register now to join our network",
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyLarge!
-                                .copyWith(color: Colors.grey),
+                                .titleMedium!
+                                .copyWith(fontSize: 18, color: Colors.grey),
                           ),
                           SizedBox(
                             height: 40.0,
@@ -125,6 +125,29 @@ class SocialRegisterScreen extends StatelessWidget {
                               onChanged: () {},
                               label: "phone number",
                               prefix: Icons.phone),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "    by Clicking Register you accept the  ",
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  navigateTo(context, Privacy());
+                                },
+                                child: Text(
+                                  "Privacy Policy",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .titleMedium!
+                                      .copyWith(color: defaultColor),
+                                ),
+                              ),
+                            ],
+                          ),
                           SizedBox(
                             height: 30,
                           ),
