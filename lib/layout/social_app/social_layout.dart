@@ -58,7 +58,7 @@ class SocialLayout extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(IconBroken.Profile), label: "Profile"),
             ],
-            onTap: (index) {
+             onTap: (index) {
               cubit.changeBottomNavBar(index);
             },
           ),

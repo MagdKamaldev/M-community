@@ -10,6 +10,7 @@ import 'package:udemy_course/shared/styles/colors.dart';
 import 'package:udemy_course/shared/styles/icon_broken.dart';
 
 class ChatDetailsScreen extends StatelessWidget {
+  
   SocialUserModel? userModel;
   ChatDetailsScreen({this.userModel});
 
